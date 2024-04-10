@@ -1,29 +1,26 @@
-﻿using CallsignAPI.Abstractions;
-using CallSignCommon.Models;
-using System.Text.Json;
-using CallSignCommon.ExtensionMethods;
-using System.Text.RegularExpressions;
-
-namespace CallsignAPI.Services;
+﻿namespace CallsignAPI.Services;
 
 public class CallsignExtLookupService: ICallsignExtLookupService
 {
     const string LookupUrlTemplate = "https://callook.info/{callsign}/json";
     private HttpClient _httpClient;
+    public const string ERROR = "ERROR";
     public async Task<CallsignInfo> GetCallsignDetailsAsync(string callsign)
     {
         try
         {
             if (IsCallsignValid(callsign) == false)
             {
-                CallsignInfo statusError = new CallsignInfo();
-                statusError.HttpStatus = 400;
+                CallsignInfo statusError = new CallsignInfo
+                {
+                    HttpStatus = 400
+                };
                 return statusError;
             }
 
             _httpClient = new HttpClient();
-            string LookupUrl = LookupUrlTemplate.Replace("{callsign}", callsign);   
-            HttpResponseMessage response = await _httpClient.GetAsync(LookupUrl);
+            string lookupUrl = LookupUrlTemplate.Replace("{callsign}", callsign);   
+            HttpResponseMessage response = await _httpClient.GetAsync(lookupUrl);
 
             if (response.IsSuccessStatusCode)
             {
@@ -45,13 +42,15 @@ public class CallsignExtLookupService: ICallsignExtLookupService
         }
         catch (Exception ex)
         {
-            CallsignInfo statusError = new CallsignInfo();
-            statusError.HttpStatus = -1;
-            statusError.Exception = ex;
+            CallsignInfo statusError = new CallsignInfo
+            {
+                HttpStatus = -1,
+                Status = ERROR,
+                Exception = ex
+            };
             return statusError;
         }
     }
-
     private bool IsCallsignValid(string callsign)
     {
         if (callsign.IsNullOrEmpty() )
@@ -62,10 +61,6 @@ public class CallsignExtLookupService: ICallsignExtLookupService
         {
             return false;
         }
-        if (Regex.IsMatch(callsign, @"^[A-Za-z]*\d+[A-Za-z]*$") == false)
-        {
-            return false;
-        }   
-        return true;
+        return Regex.IsMatch(callsign, @"^[A-Za-z]*\d+[A-Za-z]*$") != false;
     }
 }

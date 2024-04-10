@@ -1,6 +1,5 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace CallsignAPI.Controllers;
+
 [ApiController]
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase

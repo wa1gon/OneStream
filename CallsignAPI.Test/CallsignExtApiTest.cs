@@ -1,9 +1,4 @@
-using NuGet.Frameworks;
-
 namespace CallsignAPI.Test;
-using CallsignAPI.Services;
-using CallSignCommon.Models;
-using CallsignAPI.Abstractions;
 
 public class CallsignExtApiTest
 {
