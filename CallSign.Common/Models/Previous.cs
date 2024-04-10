@@ -2,6 +2,6 @@
 
 public sealed class Previous
 {
-    public string Callsign { get; set; }
-    public string OperClass { get; set; }
+    public string Callsign { get; set; } = string.Empty;
+    public string OperClass { get; set; } = string.Empty;
 }

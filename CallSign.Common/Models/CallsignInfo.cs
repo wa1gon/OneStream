@@ -2,8 +2,8 @@
 
 public class CallsignInfo
 {
-    public string Status { get; set; }
-    public string Type { get; set; }
+    public string Status { get; set; } = string.Empty;
+    public string Type { get; set; } = string.Empty;
     public Current Current { get; set; }
     public Previous Previous { get; set; }
     public Trustee Trustee { get; set; }
@@ -13,4 +13,7 @@ public class CallsignInfo
     public Otherinfo OtherInfo { get; set; }
     public int HttpStatus { get; set; }
     public Exception? Exception { get; set; } = null;
+
+    public string Notes { get; set; } = string.Empty;
+    public int CacheHitCount { get; set; } = 0;
 }
