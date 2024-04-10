@@ -2,7 +2,7 @@
 
 public sealed class Location
 {
-    public string latitude { get; set; }
-    public string longitude { get; set; }
-    public string gridsquare { get; set; }
+    public string Latitude { get; set; }
+    public string Longitude { get; set; }
+    public string Gridsquare { get; set; }
 }

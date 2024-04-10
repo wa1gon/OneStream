@@ -2,6 +2,6 @@
 
 public sealed class Trustee
 {
-    public string callsign { get; set; }
-    public string name { get; set; }
+    public string Callsign { get; set; }
+    public string Name { get; set; }
 }

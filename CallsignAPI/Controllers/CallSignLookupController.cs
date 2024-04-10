@@ -13,7 +13,7 @@ public class CallSignLookupController
         _logger = logger;
     }
     [HttpGet(Name = "Lookup")]
-    public CallsignDto? Get()
+    public CallsignInfo? Get()
     {
         return null;
     }

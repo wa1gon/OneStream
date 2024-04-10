@@ -1,9 +1,9 @@
 ﻿namespace CallSignCommon.Models;
 public sealed class Otherinfo
 {
-    public string grantDate { get; set; }
-    public string expiryDate { get; set; }
-    public string lastActionDate { get; set; }
-    public string frn { get; set; }
-    public string ulsUrl { get; set; }
+    public string GrantDate { get; set; }
+    public string ExpiryDate { get; set; }
+    public string LastActionDate { get; set; }
+    public string Frn { get; set; }
+    public string UlsUrl { get; set; }
 }
