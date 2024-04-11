@@ -1,6 +1,8 @@
-﻿namespace CallsignAPI.Services;
+﻿using System.Net;
 
-public class CallsignExtLookupService: ICallsignExtLookupService
+namespace CallsignAPI.Services;
+
+public sealed class CallsignExtLookupService: ICallsignExtLookupService
 {
     const string LookupUrlTemplate = "https://callook.info/{callsign}/json";
     private HttpClient _httpClient;
@@ -13,7 +15,8 @@ public class CallsignExtLookupService: ICallsignExtLookupService
             {
                 CallsignInfo statusError = new CallsignInfo
                 {
-                    HttpStatus = 400
+                    HttpStatus = (int)HttpStatusCode.BadRequest,
+                    Status = ERROR
                 };
                 return statusError;
             }
@@ -30,12 +33,14 @@ public class CallsignExtLookupService: ICallsignExtLookupService
                 };
                 string content = await response.Content.ReadAsStringAsync();
                 CallsignInfo callsignDetails = JsonSerializer.Deserialize<CallsignInfo>(content,options);
+                callsignDetails.HttpStatus = (int)response.StatusCode;
                 return callsignDetails;
             }
             else
             {
                 CallsignInfo statusError = new CallsignInfo();
                 statusError.HttpStatus = (int)response.StatusCode;
+                statusError.Status = ERROR;
 
                 return statusError;
             }
@@ -44,14 +49,14 @@ public class CallsignExtLookupService: ICallsignExtLookupService
         {
             CallsignInfo statusError = new CallsignInfo
             {
-                HttpStatus = -1,
+                HttpStatus = (int)HttpStatusCode.InternalServerError,
                 Status = ERROR,
                 Exception = ex
             };
             return statusError;
         }
     }
-    private bool IsCallsignValid(string callsign)
+    public bool IsCallsignValid(string callsign)
     {
         if (callsign.IsNullOrEmpty() )
         {
