@@ -7,4 +7,6 @@ public interface IRepoService
     CallsignInfo GetFromCache(string callsign);
     Task<CallsignInfo> GetCallsignDetailsAsync(string callsign);
     void RemoveFromCache(string callsign);
+    Task<CallsignInfo> ReplaceNoteInCache(CallUpdateDTO updateDto);
+    Task<CallsignInfo> AddNoteInCache(CallUpdateDTO updateDto);
 }

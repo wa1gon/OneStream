@@ -16,15 +16,16 @@ public class CallSignLookupController: ControllerBase
         var result = await _repo.GetCallsignDetailsAsync(callsign);
         return result;
     }
-    [HttpPost(Name = "update")]
-    public async  Task<IActionResult> Post( [FromBody] CallUpdateDTO callUpdate)
+    [HttpPost(Name = "addNote")]
+    public async  Task<CallsignInfo> Post( [FromBody] CallUpdateDTO callUpdate)
     {
-        var result = await _repo.GetCallsignDetailsAsync(callUpdate.Callsign);
-        if (result.Status.Equals("VALID"))
-        {
-            result.Notes = result.Notes + "; " +callUpdate.Note;
-            return Ok();
-        }
-        return BadRequest("Invalid Callsign");
+        var result = await _repo.ReplaceNoteInCache(callUpdate);
+        return result;
+    }
+    [HttpPut(Name = "updateNote")]
+    public async Task<CallsignInfo> Put([FromBody] CallUpdateDTO callUpdate)
+    {
+        var result = await _repo.AddNoteInCache(callUpdate);
+        return result;
     }
 }

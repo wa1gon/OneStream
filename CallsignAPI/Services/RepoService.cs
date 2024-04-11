@@ -18,7 +18,25 @@ public class RepoService : IRepoService
     public void AddToCache(string callsign, CallsignInfo info)
     {
         _cache.TryAdd(callsign, info);
-    }   
+    }
+    public async Task<CallsignInfo> ReplaceNoteInCache(CallUpdateDTO updateDto)
+    {
+        var info = await GetCallsignDetailsAsync(updateDto.Callsign);
+        if (info.Status == "VALID")
+        {
+            info.Notes = updateDto.Note;
+        }
+        return info;
+    }
+    public async Task<CallsignInfo> AddNoteInCache(CallUpdateDTO updateDto)
+    {
+        var info = await GetCallsignDetailsAsync(updateDto.Callsign);
+        if (info.Status == "VALID")
+        {
+            info.Notes = info.Notes + "; " + updateDto.Note;
+        }
+        return info;
+    }
     public CallsignInfo GetFromCache(string callsign)
     {
         CallsignInfo info;
