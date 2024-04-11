@@ -14,4 +14,5 @@ builder.Services.AddMatToaster(config =>
     config.MaximumOpacity = 95;
     config.VisibleStateDuration = 3000;
 });
+builder.Services.AddScoped<ILookupService, LookupService>();
 await builder.Build().RunAsync();
