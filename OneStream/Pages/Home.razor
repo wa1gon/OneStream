@@ -5,13 +5,18 @@
     <div class="first-column">
         <div class="call-input">
             <MatTextField @bind-Value="@Callsign" Dense="true" Label="Callsign"></MatTextField>
-            <MatButton OnClick="OnClick">Go</MatButton>
+            <MatButton OnClick="LookupClick" Raised="true">Go</MatButton>
         </div>
         <hr />
         <div class="notes-input">
             <p>
                 <MatTextField @bind-Value="@Notes" Dense="true" Rows="10" Label="Notes" TextArea="true" FullWidth="true"></MatTextField>
             </p>
+        </div>
+
+        <div class="notes-button justify-space-between">
+            <MatButton OnClick="AddNotesClick" Raised="true">Add Notes</MatButton>
+            <MatButton OnClick="ReplaceNotesClick" Raised="true">Replace Notes</MatButton>
         </div>
     </div>
     <div class="second-column">
