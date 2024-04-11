@@ -1,7 +1,4 @@
-﻿using CallSignCommon.Models;
-using Moq;
-
-namespace CallsignAPI.Test;
+﻿namespace CallsignAPI.Test;
 public class CacheServiceTest
 {
     [Fact]

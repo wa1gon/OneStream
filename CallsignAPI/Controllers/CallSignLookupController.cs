@@ -2,14 +2,12 @@
 
 [ApiController]
 [Route("[controller]")]
-public class CallSignLookupController
+public class CallSignLookupController: ControllerBase
 {
-    private readonly ILogger<CallSignLookupController> _logger;
     private readonly IRepoService _repo;
 
-    public CallSignLookupController(ILogger<CallSignLookupController> logger, IRepoService repo)
+    public CallSignLookupController( IRepoService repo)
     {
-        _logger = logger;
         _repo = repo;
     }
     [HttpGet(Name = "Lookup")]
@@ -18,9 +16,15 @@ public class CallSignLookupController
         var result = await _repo.GetCallsignDetailsAsync(callsign);
         return result;
     }
-    [HttpPost(Name = "Update")]
-    public CallsignInfo? Post()
+    [HttpPost(Name = "update")]
+    public async  Task<IActionResult> Post( [FromBody] CallUpdateDTO callUpdate)
     {
-        return null;
+        var result = await _repo.GetCallsignDetailsAsync(callUpdate.Callsign);
+        if (result.Status.Equals("VALID"))
+        {
+            result.Notes = result.Notes + "; " +callUpdate.Note;
+            return Ok();
+        }
+        return BadRequest("Invalid Callsign");
     }
 }

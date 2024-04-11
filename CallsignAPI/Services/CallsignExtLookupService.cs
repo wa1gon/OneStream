@@ -2,6 +2,10 @@
 
 namespace CallsignAPI.Services;
 
+
+// API Reference for Callook.info
+// https://callook.info/api_reference.php
+
 public sealed class CallsignExtLookupService: ICallsignExtLookupService
 {
     const string LookupUrlTemplate = "https://callook.info/{callsign}/json";
