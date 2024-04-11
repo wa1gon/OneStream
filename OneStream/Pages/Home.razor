@@ -1,7 +1,20 @@
 ﻿@page "/"
 
 <PageTitle>Home</PageTitle>
-
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
+<div class="container">
+    <div class="first-column">
+        <div class="call-input">
+            <MatTextField @bind-Value="@Callsign" Dense="true" Label="Callsign"></MatTextField>
+            <MatButton OnClick="OnClick">Go</MatButton>
+        </div>
+        <hr />
+        <div class="notes-input">
+            <p>
+                <MatTextField @bind-Value="@Notes" Dense="true" Rows="10" Label="Notes" TextArea="true" FullWidth="true"></MatTextField>
+            </p>
+        </div>
+    </div>
+    <div class="second-column">
+        Second column
+     </div>
+</div>
