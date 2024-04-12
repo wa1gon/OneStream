@@ -1,7 +1,6 @@
 ﻿namespace CallsignAPI.Services;
-using System;
 using System.Collections.Concurrent;
-using CallsignAPI.Abstractions;
+
 
 public class RepoService : IRepoService
 {
@@ -33,7 +32,12 @@ public class RepoService : IRepoService
         var info = await GetCallsignDetailsAsync(updateDto.Callsign);
         if (info.Status == "VALID")
         {
-            info.Notes = info.Notes + "; " + updateDto.Note;
+            if (info.Notes.IsNullOrEmpty())
+                info.Notes = updateDto.Note;
+            else
+            {
+                info.Notes = info.Notes + "; " + updateDto.Note;
+            }
         }
         return info;
     }

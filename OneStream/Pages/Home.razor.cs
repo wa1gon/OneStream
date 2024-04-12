@@ -35,11 +35,19 @@ public partial class Home : ComponentBase
             return;
         }
         CallInfo = await LookupService.PostDataAsync(new CallUpdateDTO { Callsign = Callsign, Note = Notes });
+        Notes = string.Empty;
 
     }
 
     private async Task AddNotesClick()
     {
-        throw new NotImplementedException();
+        if (Callsign.IsNullOrEmpty() == true)
+        {
+
+            Toaster.Add("Callsign is required", MatToastType.Warning, "title");
+            return;
+        }
+        CallInfo = await LookupService.PutDataAsync(new CallUpdateDTO { Callsign = Callsign, Note = Notes });
+        Notes = string.Empty;
     }
 }

@@ -69,32 +69,7 @@ public class LookupService: ILookupService
         }
     }
 
-    //public async Task<CallsignInfo> GetCallsignDetailsAsync(string callsign)
-    //{
-    //    try
-    //    {
-    //        if (IsCallsignValid(callsign) == false)
-    //        {
-    //            CallsignInfo statusError = new CallsignInfo
-    //            {
-    //                HttpStatus = (int)HttpStatusCode.BadRequest,
-    //                Status = ERROR
-    //            };
-    //            return statusError;
-    //        }
-    //        _httpClient = new HttpClient();
-    //    } 
-    //    catch(Exception ex)
-    //    {
-    //        var statusError = new CallsignInfo
-    //        {
-    //            HttpStatus = (int)HttpStatusCode.InternalServerError,
-    //            Status = ERROR,
-    //            Exception = ex
-    //        };
-    //        return statusError;
-    //    }
-    //}
+ 
     public async Task<CallsignInfo> PostDataAsync(CallUpdateDTO NotesData)
     {
         try
@@ -124,15 +99,69 @@ public class LookupService: ILookupService
         }
         catch (HttpRequestException e)
         {
-            // Handle potential network errors here
-            Console.WriteLine($"Error posting data: {e.Message}");
-            throw;
+
+            return new CallsignInfo
+            {
+                HttpStatus = (int)HttpStatusCode.InternalServerError,
+                Status = ERROR,
+                Exception = e
+            };
         }
         catch (Exception e)
         {
-            // Handle other potential errors here
-            Console.WriteLine($"Error posting data: {e.Message}");
-            throw;
+            return new CallsignInfo
+            {
+                HttpStatus = (int)HttpStatusCode.InternalServerError,
+                Status = ERROR,
+                Exception = e
+            };
+        }
+    }
+    public async Task<CallsignInfo> PutDataAsync(CallUpdateDTO NotesData)
+    {
+        try
+        {
+            var jsonData = JsonSerializer.Serialize(NotesData);
+            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            // Post the data
+            HttpResponseMessage response = await _httpClient.PutAsync(LookupHost, content);
+            response.EnsureSuccessStatusCode();
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<CallsignInfo>(responseContent, _jsonOptions);
+            }
+            else
+            {
+                var errorInfo = new CallsignInfo
+                {
+                    HttpStatus = (int)response.StatusCode,
+                    Status = ERROR
+                };
+                return errorInfo;
+            }
+
+        }
+        catch (HttpRequestException e)
+        {
+
+            return new CallsignInfo
+            {
+                HttpStatus = (int)HttpStatusCode.InternalServerError,
+                Status = ERROR,
+                Exception = e
+            };
+        }
+        catch (Exception e)
+        {
+            return new CallsignInfo
+            {
+                HttpStatus = (int)HttpStatusCode.InternalServerError,
+                Status = ERROR,
+                Exception = e
+            };
         }
     }
     //TODO: Move this to a common library
