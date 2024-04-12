@@ -36,3 +36,38 @@
     margin-left: 10px;
     justify-content: space-between;
 }
+.page-padding {
+    padding: 25px;
+}
+.lic {
+    grid-area: lic;
+
+}
+.name {
+    grid-area: name;
+
+}
+.location {
+    grid-area: location;
+
+}
+.other {
+    grid-area: other;
+
+}
+.notes {
+    grid-area: notes;
+
+}
+.results-wrapper {
+    display: grid;
+    padding: 15px;
+    margin: 10px;
+    grid-gap: 10px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "lic        name"
+        ".       ."
+        "location      other"
+        "notes      notes";
+}

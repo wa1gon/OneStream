@@ -28,13 +28,33 @@
     </div>
     @if (CallInfo is not null && CallInfo.Status == "VALID")
     {
-        <div class="second-column">
-            <b>Name:</b> @CallInfo.Name<br/>
-            <b>Callsign:</b> @CallInfo.Current.Callsign<br/>
-            <b>Address:</b> @CallInfo.Address.Line1<br/>
-            <b>City:</b> @CallInfo.Address.Line2<br/>
-            <b>Expire Date:</b> @CallInfo.OtherInfo.ExpiryDate<br/>
-            <b>Notes:</b> @CallInfo.Notes<br/>
+        <div class="results-wrapper">
+            <MatPaper class="lic" Elevation="10">
+                <div class="page-padding">
+                    <b>Callsign:</b> @CallInfo.Current.Callsign<br/>
+                    <b>Class:</b> @CallInfo.Current.OperClass<br/>
+                    <b>Previous Call:</b> @CallInfo.Previous.Callsign<br/>
+                    <b>Grant Date:</b> @CallInfo.OtherInfo.GrantDate<br />
+                    <b>Expire Date:</b> @CallInfo.OtherInfo.ExpiryDate<br/>
+                </div>
+            </MatPaper>
+
+            <MatPaper class="name" Elevation="10">
+                <div class="page-padding">
+                    <b>Name:</b> @CallInfo.Name<br />
+                    <b>Address:</b> @CallInfo.Address.Line1<br />
+                    <b>City:</b> @CallInfo.Address.Line2<br />
+                </div>
+            </MatPaper>
+
+            <MatPaper class="notes" Elevation="10">
+                <div class="page-padding">
+                    <b>Notes:</b> @CallInfo.Notes<br/>
+                </div>
+            </MatPaper>
+
         </div>
+
+
     }
 </div>

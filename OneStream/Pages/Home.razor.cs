@@ -16,13 +16,13 @@ public partial class Home : ComponentBase
         }
         //Toaster.Add("Toaster test " + Callsign, MatToastType.Danger, "title");
         CallInfo = await LookupService.GetCallsignDetailsAsync(Callsign);
-        if (CallInfo.HttpStatus == 200)
+        if (CallInfo.HttpStatus == 200 && CallInfo.Status == "VALID")
         {
             Toaster.Add("Callsign found", MatToastType.Success, "title");
         }
         else
         {
-            Toaster.Add("Callsign not found", MatToastType.Danger, "title");
+            Toaster.Add("Callsign not found", MatToastType.Warning, "title");
         }
     }
 
