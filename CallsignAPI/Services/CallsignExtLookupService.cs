@@ -9,8 +9,15 @@ namespace CallsignAPI.Services;
 public sealed class CallsignExtLookupService: ICallsignExtLookupService
 {
     const string LookupUrlTemplate = "https://callook.info/{callsign}/json";
-    private HttpClient _httpClient;
+
+    private readonly IHttpClientFactory _httpClientFactory;
+
     public const string ERROR = "ERROR";
+
+    public CallsignExtLookupService(IHttpClientFactory httpClientFactory)
+    {
+        _httpClientFactory = httpClientFactory;
+    }
     public async Task<CallsignInfo> GetCallsignDetailsAsync(string callsign)
     {
         try
@@ -25,9 +32,9 @@ public sealed class CallsignExtLookupService: ICallsignExtLookupService
                 return statusError;
             }
 
-            _httpClient = new HttpClient();
+            var httpClient = _httpClientFactory.CreateClient();
             string lookupUrl = LookupUrlTemplate.Replace("{callsign}", callsign);   
-            HttpResponseMessage response = await _httpClient.GetAsync(lookupUrl);
+            HttpResponseMessage response = await httpClient.GetAsync(lookupUrl);
 
             if (response.IsSuccessStatusCode)
             {
