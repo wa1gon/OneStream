@@ -6,5 +6,3 @@ TODO List
 
 * Add Entity Frame Repository
 * Move validation to the common
-* Add IHttpClientFactory on the server side
-
