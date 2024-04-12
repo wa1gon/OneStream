@@ -4,13 +4,20 @@
 <div class="container">
     <div class="first-column">
         <div class="call-input">
-            <MatTextField @bind-Value="@Callsign" Dense="true" Label="Callsign"></MatTextField>
-            <MatButton OnClick="LookupClick" Raised="true">Go</MatButton>
+            <MatPaper Elevation="10">
+                <div class="paper-margin">
+                    <MatTextField @bind-Value="@Callsign" Style="width: 100px;"  Dense="true" Label="Callsign"></MatTextField>
+                    <MatButton OnClick="LookupClick" Raised="true">Go</MatButton>
+                </div>
+            </MatPaper>
         </div>
-        <hr />
+     
         <div class="notes-input">
             <p>
-                <MatTextField @bind-Value="@Notes" Dense="true" Rows="10" Label="Notes" TextArea="true" FullWidth="true"></MatTextField>
+                <MatPaper Elevation="10">
+                    <MatTextField @bind-Value="@Notes" Dense="true" Rows="10" Label="Notes" 
+                                  TextArea="true" FullWidth="true"></MatTextField>
+                </MatPaper>
             </p>
         </div>
 
@@ -19,12 +26,15 @@
             <MatButton OnClick="ReplaceNotesClick" Raised="true">Replace Notes</MatButton>
         </div>
     </div>
-    <div class="second-column">
-        <b>Name:</b> @CallInfo.Name<br/>
-        <b>Callsign:</b> @CallInfo.Current.Callsign<br/>
-        <b>Address:</b> @CallInfo.Address.Line1<br/>
-        <b>City:</b> @CallInfo.Address.Line2<br />
-        <b>Expire Date:</b> @CallInfo.OtherInfo.ExpiryDate<br />
-        <b>Notes:</b> @CallInfo.Notes<br />
-     </div>
+    @if (CallInfo is not null && CallInfo.Status == "VALID")
+    {
+        <div class="second-column">
+            <b>Name:</b> @CallInfo.Name<br/>
+            <b>Callsign:</b> @CallInfo.Current.Callsign<br/>
+            <b>Address:</b> @CallInfo.Address.Line1<br/>
+            <b>City:</b> @CallInfo.Address.Line2<br/>
+            <b>Expire Date:</b> @CallInfo.OtherInfo.ExpiryDate<br/>
+            <b>Notes:</b> @CallInfo.Notes<br/>
+        </div>
+    }
 </div>
